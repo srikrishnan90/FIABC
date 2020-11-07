@@ -30,7 +30,7 @@
      <string notr="true">background:rgb(17, 46, 88)</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QCustomPlot" name="customPlot" native="true">
@@ -1022,13 +1022,14 @@ color:rgb(255, 255, 255);</string>
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_3"/>
    </widget>
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>265</width>
+      <width>200</width>
       <height>71</height>
      </rect>
     </property>
@@ -1081,9 +1082,9 @@ color:rgb(255, 255, 255);
    <widget class="QToolButton" name="toolButton_2">
     <property name="geometry">
      <rect>
-      <x>267</x>
+      <x>200</x>
       <y>0</y>
-      <width>265</width>
+      <width>200</width>
       <height>71</height>
      </rect>
     </property>
@@ -1122,9 +1123,9 @@ color:rgb(255, 255, 255);</string>
    <widget class="QToolButton" name="toolButton_3">
     <property name="geometry">
      <rect>
-      <x>534</x>
+      <x>600</x>
       <y>0</y>
-      <width>265</width>
+      <width>200</width>
       <height>71</height>
      </rect>
     </property>
@@ -1146,6 +1147,47 @@ color:rgb(255, 255, 255);</string>
     <property name="icon">
      <iconset resource="icons.qrc">
       <normaloff>:/close.png</normaloff>:/close.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextUnderIcon</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_4">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>0</y>
+      <width>200</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>PibotoLt</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:rgb(1, 114, 192);
+color:rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Biochemistry</string>
+    </property>
+    <property name="icon">
+     <iconset resource="icons.qrc">
+      <normaloff>:/flask.png</normaloff>:/flask.png</iconset>
     </property>
     <property name="iconSize">
      <size>

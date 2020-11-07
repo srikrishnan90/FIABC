@@ -343,12 +343,14 @@ void MainWindow::on_toolButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
     ui->toolButton_2->setChecked(false);
+    ui->toolButton_4->setChecked(false);
 }
 
 void MainWindow::on_toolButton_2_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
     ui->toolButton->setChecked(false);
+    ui->toolButton_4->setChecked(false);
     int intensity=0,samprate=0,cutoff=0,homing_speed=0,reading_speed=0,win_start=0,win_end=0;
 
     QSqlQuery query;
@@ -568,4 +570,11 @@ void MainWindow::on_pushButton_17_clicked()
 void MainWindow::on_toolButton_3_clicked()
 {
     qApp->exit();
+}
+
+void MainWindow::on_toolButton_4_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
 }
