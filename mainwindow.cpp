@@ -182,7 +182,7 @@ f.setup (samplingrate, cutoff_frequency);
          digitalWrite(steps, LOW);
          QThread::usleep(reading_speed);
 
-         read[i]=readadc(0);
+         read[i]=readadc(7);
          filtdata[i]=f.filter(read[i]);
          qDebug()<<read[i];
     }
@@ -577,4 +577,165 @@ void MainWindow::on_toolButton_4_clicked()
     ui->stackedWidget->setCurrentIndex(3);
     ui->toolButton->setChecked(false);
     ui->toolButton_2->setChecked(false);
+}
+
+void MainWindow::on_pushButton_45_clicked()
+{
+
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(1).toDouble();
+        cutoff_frequency=query.value(2).toDouble();
+
+    }
+
+QThread::sleep(1);
+const int order = 2; // 4th order (=2 biquads)
+Iir::Butterworth::LowPass<order> f;
+//const float samplingrate = 1500; // Hz
+//const float cutoff_frequency = 4; // Hz
+f.setup (samplingrate, cutoff_frequency);
+int b360nm[10],b405nm[10],b505nm[10],b525nm[10],b570nm[10],b625nm[10],b660nm[10];
+for(int i=0;i<10;i++)
+{
+    b360nm[i]=readadc(6);
+    b405nm[i]=readadc(5);
+    b505nm[i]=readadc(4);
+    b525nm[i]=readadc(3);
+    b570nm[i]=readadc(2);
+    b625nm[i]=readadc(1);
+    b660nm[i]=readadc(0);
+}
+for(int i=1;i<10;i++)
+{
+    b360nm[0]+=b360nm[i];
+    b405nm[0]+=b405nm[i];
+    b505nm[0]+=b505nm[i];
+    b525nm[0]+=b525nm[i];
+    b570nm[0]+=b570nm[i];
+    b625nm[0]+=b625nm[i];
+    b660nm[0]+=b660nm[i];
+}
+
+b360nm[0]=b360nm[0]/10;
+b405nm[0]=b405nm[0]/10;
+b505nm[0]=b505nm[0]/10;
+b525nm[0]=b525nm[0]/10;
+b570nm[0]=b570nm[0]/10;
+b625nm[0]=b625nm[0]/10;
+b660nm[0]=b660nm[0]/10;
+
+ui->label_27->setNum(b360nm[0]);
+ui->label_60->setNum(b405nm[0]);
+ui->label_63->setNum(b505nm[0]);
+ui->label_66->setNum(b525nm[0]);
+ui->label_69->setNum(b570nm[0]);
+ui->label_72->setNum(b625nm[0]);
+ui->label_75->setNum(b660nm[0]);
+
+}
+
+void MainWindow::on_pushButton_46_clicked()
+{
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(1).toDouble();
+        cutoff_frequency=query.value(2).toDouble();
+
+    }
+
+QThread::sleep(1);
+const int order = 2; // 4th order (=2 biquads)
+Iir::Butterworth::LowPass<order> f;
+//const float samplingrate = 1500; // Hz
+//const float cutoff_frequency = 4; // Hz
+f.setup (samplingrate, cutoff_frequency);
+int b360nm[10],b405nm[10],b505nm[10],b525nm[10],b570nm[10],b625nm[10],b660nm[10];
+for(int i=0;i<10;i++)
+{
+    b360nm[i]=readadc(6);
+    b405nm[i]=readadc(5);
+    b505nm[i]=readadc(4);
+    b525nm[i]=readadc(3);
+    b570nm[i]=readadc(2);
+    b625nm[i]=readadc(1);
+    b660nm[i]=readadc(0);
+}
+for(int i=1;i<10;i++)
+{
+    b360nm[0]+=b360nm[i];
+    b405nm[0]+=b405nm[i];
+    b505nm[0]+=b505nm[i];
+    b525nm[0]+=b525nm[i];
+    b570nm[0]+=b570nm[i];
+    b625nm[0]+=b625nm[i];
+    b660nm[0]+=b660nm[i];
+}
+
+b360nm[0]=b360nm[0]/10;
+b405nm[0]=b405nm[0]/10;
+b505nm[0]=b505nm[0]/10;
+b525nm[0]=b525nm[0]/10;
+b570nm[0]=b570nm[0]/10;
+b625nm[0]=b625nm[0]/10;
+b660nm[0]=b660nm[0]/10;
+
+ui->label_28->setNum(b360nm[0]);
+ui->label_61->setNum(b405nm[0]);
+ui->label_64->setNum(b505nm[0]);
+ui->label_67->setNum(b525nm[0]);
+ui->label_70->setNum(b570nm[0]);
+ui->label_73->setNum(b625nm[0]);
+ui->label_76->setNum(b660nm[0]);
+
+double t360nm=0,t405nm=0,t505nm=0,t525nm=0,t570nm=0,t625nm=0,t660nm=0;
+double a360nm=0,a405nm=0,a505nm=0,a525nm=0,a570nm=0,a625nm=0,a660nm=0;
+
+double blank=ui->label_27->text().toDouble();
+t360nm=b360nm[0]/blank;
+a360nm=-log(t360nm);
+
+blank=ui->label_60->text().toDouble();
+t405nm=b405nm[0]/blank;
+a405nm=-log(t405nm);
+
+blank=ui->label_63->text().toDouble();
+t505nm=b505nm[0]/blank;
+a505nm=-log(t505nm);
+
+blank=ui->label_66->text().toDouble();
+t525nm=b525nm[0]/blank;
+a525nm=-log(t525nm);
+
+blank=ui->label_69->text().toDouble();
+t570nm=b570nm[0]/blank;
+a570nm=-log(t570nm);
+
+blank=ui->label_72->text().toDouble();
+t625nm=b625nm[0]/blank;
+a625nm=-log(t625nm);
+
+blank=ui->label_75->text().toDouble();
+t660nm=b660nm[0]/blank;
+a660nm=-log(t660nm);
+//qDebug()<<blank<<t360nm<<a360nm;
+
+ui->label_29->setText(QString::number(a360nm, 'f', 3));
+ui->label_59->setText(QString::number(a405nm, 'f', 3));
+ui->label_62->setText(QString::number(a505nm, 'f', 3));
+ui->label_65->setText(QString::number(a525nm, 'f', 3));
+ui->label_68->setText(QString::number(a570nm, 'f', 3));
+ui->label_71->setText(QString::number(a625nm, 'f', 3));
+ui->label_74->setText(QString::number(a660nm, 'f', 3));
+
 }

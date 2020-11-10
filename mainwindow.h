@@ -11,6 +11,7 @@
 #include <Iir.h>
 #include <QtSql>
 #include <QSqlDatabase>
+#include <math.h>
 
 
 namespace Ui {
@@ -80,6 +81,10 @@ private slots:
     void on_toolButton_3_clicked();
 
     void on_toolButton_4_clicked();
+
+    void on_pushButton_45_clicked();
+
+    void on_pushButton_46_clicked();
 
 private:
     Ui::MainWindow *ui;
