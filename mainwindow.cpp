@@ -19,6 +19,9 @@ static int read[20000];
 static int filtdata[20000];
 
 static int opt=0;
+static double bc_y_val=0;
+
+
 
 
 
@@ -73,12 +76,23 @@ MainWindow::MainWindow(QWidget *parent) :
 //     ui->customPlot->yAxis->grid()->setZeroLinePen(Qt::NoPen);
 //     ui->customPlot->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
 //     ui->customPlot->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+
+
+     //ui->customPlot_2->setBackground(QColor(0,0,26));
+     ui->customPlot_2->addGraph();
+     ui->customPlot_2->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
+     ui->customPlot_2->graph(0)->setLineStyle(QCPGraph::lsLine);
+
+   ;
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -545,26 +559,38 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_pushButton_17_clicked()
 {
         QString val=ui->lineEdit_9->text();
-        QSqlQuery query;
+qDebug()<<opt;
+        if((opt==8))
+        {
+            ui->lineEdit_10->setText(val);
+            ui->stackedWidget->setCurrentIndex(4);
+         }
+        else
+        {
+            QSqlQuery query;
 
-        if(opt==1)
-            query.prepare("update FIA set intensity=:val where sno=1");
-        else if(opt==2)
-             query.prepare("update FIA set samprate=:val where sno=1");
-        else if(opt==3)
-            query.prepare("update FIA set cutoff=:val where sno=1");
-        else if(opt==4)
-            query.prepare("update FIA set homespeed=:val where sno=1");
-        else if(opt==5)
-            query.prepare("update FIA set readspeed=:val where sno=1");
-        else if(opt==6)
-            query.prepare("update FIA set startregion=:val where sno=1");
-        else if(opt==7)
-            query.prepare("update FIA set endregion=:val where sno=1");
+            if(opt==1)
+                query.prepare("update FIA set intensity=:val where sno=1");
+            else if(opt==2)
+                 query.prepare("update FIA set samprate=:val where sno=1");
+            else if(opt==3)
+                query.prepare("update FIA set cutoff=:val where sno=1");
+            else if(opt==4)
+                query.prepare("update FIA set homespeed=:val where sno=1");
+            else if(opt==5)
+                query.prepare("update FIA set readspeed=:val where sno=1");
+            else if(opt==6)
+                query.prepare("update FIA set startregion=:val where sno=1");
+            else if(opt==7)
+                query.prepare("update FIA set endregion=:val where sno=1");
 
-        query.bindValue(":val",val);
-        query.exec();
-        on_toolButton_2_clicked();
+            query.bindValue(":val",val);
+            query.exec();
+            on_toolButton_2_clicked();
+        }
+
+
+
 }
 
 void MainWindow::on_toolButton_3_clicked()
@@ -582,24 +608,24 @@ void MainWindow::on_toolButton_4_clicked()
 void MainWindow::on_pushButton_45_clicked()
 {
 
-    double samplingrate=0,cutoff_frequency=0;
-    QSqlQuery query;
-    query.prepare("select samprate, cutoff from FIA where sno=1");
-    query.exec();
-    while(query.next())
-    {
+//    double samplingrate=0,cutoff_frequency=0;
+//    QSqlQuery query;
+//    query.prepare("select samprate, cutoff from FIA where sno=1");
+//    query.exec();
+//    while(query.next())
+//    {
 
-        samplingrate=query.value(1).toDouble();
-        cutoff_frequency=query.value(2).toDouble();
+//        samplingrate=query.value(1).toDouble();
+//        cutoff_frequency=query.value(2).toDouble();
 
-    }
+//    }
 
-QThread::sleep(1);
-const int order = 2; // 4th order (=2 biquads)
-Iir::Butterworth::LowPass<order> f;
+//QThread::sleep(1);
+//const int order = 2; // 4th order (=2 biquads)
+//Iir::Butterworth::LowPass<order> f;
 //const float samplingrate = 1500; // Hz
 //const float cutoff_frequency = 4; // Hz
-f.setup (samplingrate, cutoff_frequency);
+//f.setup (samplingrate, cutoff_frequency);
 int b360nm[10],b405nm[10],b505nm[10],b525nm[10],b570nm[10],b625nm[10],b660nm[10];
 for(int i=0;i<10;i++)
 {
@@ -642,24 +668,24 @@ ui->label_75->setNum(b660nm[0]);
 
 void MainWindow::on_pushButton_46_clicked()
 {
-    double samplingrate=0,cutoff_frequency=0;
-    QSqlQuery query;
-    query.prepare("select samprate, cutoff from FIA where sno=1");
-    query.exec();
-    while(query.next())
-    {
+//    double samplingrate=0,cutoff_frequency=0;
+//    QSqlQuery query;
+//    query.prepare("select samprate, cutoff from FIA where sno=1");
+//    query.exec();
+//    while(query.next())
+//    {
 
-        samplingrate=query.value(1).toDouble();
-        cutoff_frequency=query.value(2).toDouble();
+//        samplingrate=query.value(1).toDouble();
+//        cutoff_frequency=query.value(2).toDouble();
 
-    }
+//    }
 
-QThread::sleep(1);
-const int order = 2; // 4th order (=2 biquads)
-Iir::Butterworth::LowPass<order> f;
+//QThread::sleep(1);
+//const int order = 2; // 4th order (=2 biquads)
+//Iir::Butterworth::LowPass<order> f;
 //const float samplingrate = 1500; // Hz
 //const float cutoff_frequency = 4; // Hz
-f.setup (samplingrate, cutoff_frequency);
+//f.setup (samplingrate, cutoff_frequency);
 int b360nm[10],b405nm[10],b505nm[10],b525nm[10],b570nm[10],b625nm[10],b660nm[10];
 for(int i=0;i<10;i++)
 {
@@ -737,5 +763,102 @@ ui->label_65->setText(QString::number(a525nm, 'f', 3));
 ui->label_68->setText(QString::number(a570nm, 'f', 3));
 ui->label_71->setText(QString::number(a625nm, 'f', 3));
 ui->label_74->setText(QString::number(a660nm, 'f', 3));
+
+}
+
+
+void MainWindow::on_pushButton_27_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Sample points");
+    opt=8;
+    ui->lineEdit_9->setText(ui->lineEdit_10->text());
+}
+
+void MainWindow::on_pushButton_47_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+    ui->toolButton->setChecked(false);
+    ui->toolButton_2->setChecked(false);
+
+}
+
+void MainWindow::on_pushButton_48_clicked()
+{
+    int wavelength=0;
+    wavelength=ui->comboBox->currentIndex();
+    //qDebug()<<wavelength;
+    int blank[10];
+    for(int i=0;i<10;i++)
+    {
+        blank[i]=readadc(wavelength);
+
+    }
+    for(int i=1;i<10;i++)
+    {
+        blank[0]+=blank[i];
+
+    }
+
+    blank[0]=blank[0]/10;
+    ui->label_33->setNum(blank[0]);
+
+}
+
+void MainWindow::on_pushButton_49_clicked()
+{
+    clearData();
+    plot();
+    int wavelength=0;
+    wavelength=ui->comboBox->currentIndex();
+    //qDebug()<<wavelength;
+    int blank=ui->label_33->text().toInt();
+    double read=0,transmission=0,absorbance=0;
+    double samp=ui->lineEdit_10->text().toInt();
+    for(int i=0;i<=samp;i++)
+    {
+        read=readadc(wavelength);
+        transmission=read/blank;
+        absorbance=-log(transmission);
+
+        ui->label_36->setNum(read);
+        ui->label_37->setText(QString::number(absorbance, 'f', 3));
+        addPoint(i,absorbance);
+        plot();
+        QApplication::processEvents();
+        QThread::sleep(1);
+    }
+
+}
+
+void MainWindow::addPoint(double x, double y)
+{
+    qv_x.append(x);
+    qv_y.append(y);
+    bc_y_val=y;
+}
+
+void MainWindow::clearData()
+{
+qv_x.clear();
+qv_y.clear();
+}
+
+void MainWindow::plot()
+{
+    int samp=ui->lineEdit_10->text().toInt();
+    //ui->customPlot_2->addGraph();
+    ui->customPlot_2->graph(0)->setData(qv_x,qv_y);
+    //ui->customPlot_2->graph(0)->setVisible(false);
+    //ui->customPlot_2->addGraph();
+    // give the axes some labels:
+    ui->customPlot_2->xAxis->setLabel("POINTS");
+    ui->customPlot_2->yAxis->setLabel("OD");
+    // set axes ranges, so we see all data:
+    ui->customPlot_2->xAxis->setRange(0, samp);
+    ui->customPlot_2->yAxis->setRange(bc_y_val-1,bc_y_val+1);
+    ui->customPlot_2->replot();
+    ui->customPlot_2->update();
+
 
 }

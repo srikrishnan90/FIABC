@@ -30,7 +30,7 @@
      <string notr="true">background:rgb(17, 46, 88)</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QCustomPlot" name="customPlot" native="true">
@@ -298,7 +298,7 @@ color:rgb(255, 255, 255);</string>
        <property name="geometry">
         <rect>
          <x>170</x>
-         <y>14</y>
+         <y>10</y>
          <width>130</width>
          <height>40</height>
         </rect>
@@ -1708,7 +1708,7 @@ color:rgb(255, 255, 255);</string>
      <widget class="QPushButton" name="pushButton_45">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>120</x>
         <y>270</y>
         <width>161</width>
         <height>71</height>
@@ -1733,7 +1733,7 @@ color:rgb(255, 255, 255);</string>
      <widget class="QPushButton" name="pushButton_46">
       <property name="geometry">
        <rect>
-        <x>420</x>
+        <x>320</x>
         <y>270</y>
         <width>161</width>
         <height>71</height>
@@ -1755,6 +1755,370 @@ color:rgb(255, 255, 255);</string>
        <string>Read O.D.</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_47">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>270</y>
+        <width>161</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>PibotoLt</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(1, 114, 192);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Plot</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_4">
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(1, 114, 192);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>660nm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>625nm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>570nm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>525nm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>505nm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>405nm</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>360nm</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_30">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Wavelength</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Blank Val</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>110</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_48">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>300</y>
+        <width>161</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>PibotoLt</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(1, 114, 192);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Read Blank</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_49">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>300</y>
+        <width>161</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>PibotoLt</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(1, 114, 192);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Read OD</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_27">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>150</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(0,0,0,0))</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>160</y>
+        <width>121</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Sample Points</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_10">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>150</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_35">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Sample Val</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_36">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>220</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QCustomPlot" name="customPlot_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>20</y>
+        <width>521</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(0, 0, 26)</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_37">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>260</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_38">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>260</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Sample OD</string>
+      </property>
+     </widget>
+     <zorder>lineEdit_10</zorder>
+     <zorder>comboBox</zorder>
+     <zorder>label_30</zorder>
+     <zorder>label_32</zorder>
+     <zorder>label_33</zorder>
+     <zorder>pushButton_48</zorder>
+     <zorder>pushButton_49</zorder>
+     <zorder>pushButton_27</zorder>
+     <zorder>label_34</zorder>
+     <zorder>label_35</zorder>
+     <zorder>label_36</zorder>
+     <zorder>customPlot_2</zorder>
+     <zorder>label_37</zorder>
+     <zorder>label_38</zorder>
     </widget>
    </widget>
    <widget class="QToolButton" name="toolButton">

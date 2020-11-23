@@ -26,6 +26,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void addPoint(double x, double y);
+    void clearData();
+    void plot();
+
 private slots:
     void on_pushButton_clicked();
 
@@ -86,8 +90,20 @@ private slots:
 
     void on_pushButton_46_clicked();
 
+
+
+    void on_pushButton_47_clicked();
+
+    void on_pushButton_27_clicked();
+
+    void on_pushButton_48_clicked();
+
+    void on_pushButton_49_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    QVector<double> qv_x, qv_y;
 };
 
 #endif // MAINWINDOW_H
