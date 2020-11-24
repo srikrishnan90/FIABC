@@ -835,13 +835,15 @@ void MainWindow::addPoint(double x, double y)
 {
     qv_x.append(x);
     qv_y.append(y);
-    bc_y_val=y;
+    if(y>bc_y_val)
+        bc_y_val=y;
 }
 
 void MainWindow::clearData()
 {
 qv_x.clear();
 qv_y.clear();
+
 }
 
 void MainWindow::plot()
@@ -856,7 +858,7 @@ void MainWindow::plot()
     ui->customPlot_2->yAxis->setLabel("OD");
     // set axes ranges, so we see all data:
     ui->customPlot_2->xAxis->setRange(0, samp);
-    ui->customPlot_2->yAxis->setRange(bc_y_val-1,bc_y_val+1);
+    ui->customPlot_2->yAxis->setRange(-0.5,bc_y_val+1);
     ui->customPlot_2->replot();
     ui->customPlot_2->update();
 
