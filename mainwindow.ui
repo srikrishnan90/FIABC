@@ -1956,7 +1956,7 @@ color:rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>150</y>
+        <y>140</y>
         <width>121</width>
         <height>40</height>
        </rect>
@@ -1994,7 +1994,7 @@ color:rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>150</y>
+        <y>140</y>
         <width>121</width>
         <height>40</height>
        </rect>
@@ -2008,7 +2008,7 @@ color:rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>220</y>
+        <y>280</y>
         <width>101</width>
         <height>17</height>
        </rect>
@@ -2030,7 +2030,7 @@ color:rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>220</y>
+        <y>280</y>
         <width>111</width>
         <height>17</height>
        </rect>
@@ -2065,7 +2065,7 @@ color:rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>260</y>
+        <y>320</y>
         <width>111</width>
         <height>17</height>
        </rect>
@@ -2087,7 +2087,7 @@ color:rgb(255, 255, 255);</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>260</y>
+        <y>320</y>
         <width>101</width>
         <height>17</height>
        </rect>
@@ -2105,6 +2105,59 @@ color:rgb(255, 255, 255);</string>
        <string>Sample OD</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_111">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>220</y>
+        <width>121</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Interval</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_57">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>220</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 0), stop:1 rgba(0,0,0,0))</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_19">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>220</y>
+        <width>121</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:rgb(17, 46, 88);
+color:rgb(255, 255, 255);</string>
+      </property>
+     </widget>
+     <zorder>lineEdit_19</zorder>
      <zorder>lineEdit_10</zorder>
      <zorder>comboBox</zorder>
      <zorder>label_30</zorder>
@@ -2119,6 +2172,8 @@ color:rgb(255, 255, 255);</string>
      <zorder>customPlot_2</zorder>
      <zorder>label_37</zorder>
      <zorder>label_38</zorder>
+     <zorder>label_111</zorder>
+     <zorder>pushButton_57</zorder>
     </widget>
    </widget>
    <widget class="QToolButton" name="toolButton">
