@@ -25,9 +25,10 @@ static int filt525nm[200];
 static int filt570nm[200];
 static int filt625nm[200];
 static int filt660nm[200];
+static int filtwave[200];
 
 static int readbc[200];
-static int filtwave[200];
+//static int filtwave[200];
 
 static int opt=0;
 static double bc_y_val=0;
@@ -842,44 +843,103 @@ void MainWindow::on_pushButton_47_clicked()
 
 void MainWindow::on_pushButton_48_clicked()
 {
+
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
     int wavelength=0;
     wavelength=ui->comboBox->currentIndex();
     //qDebug()<<wavelength;
-    int blank[10];
-    for(int i=0;i<10;i++)
+    int blank[200];
+
+
+    for(int i=0;i<200;i++)
     {
         blank[i]=readadc(wavelength);
+        filtwave[i]=fwave.filter(blank[i]);
 
     }
-    for(int i=1;i<10;i++)
+    for(int i=100;i<200;i++)
     {
-        blank[0]+=blank[i];
+        filtwave[0]+=filtwave[i];
 
     }
 
-    blank[0]=blank[0]/10;
-    ui->label_33->setNum(blank[0]);
+    filtwave[0]=filtwave[0]/100;
+    ui->label_33->setNum(filtwave[0]);
 
 }
 
 void MainWindow::on_pushButton_49_clicked()
 {
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+
+    //nt read[200];
     unsigned long interval=ui->lineEdit_19->text().toULong();
     clearData();
     plot();
     int wavelength=0;
     wavelength=ui->comboBox->currentIndex();
     //qDebug()<<wavelength;
-    int blank=ui->label_33->text().toInt();
-    double read=0,transmission=0,absorbance=0;
+    double blank=ui->label_33->text().toInt();
+    double transmission=0,absorbance=0;
+    int read1[200];
     double samp=ui->lineEdit_10->text().toInt();
     for(int i=0;i<=samp;i++)
     {
-        read=readadc(wavelength);
-        transmission=blank/read;
-        absorbance=log10(transmission);
+        for(int j=0;j<200;j++)
+        {
+            read1[j]=readadc(wavelength);
+            filtwave[j]=fwave.filter(read1[j]);
+            qDebug()<<read1[j]<<filtwave[j];
 
-        ui->label_36->setNum(read);
+        }
+        for(int j=100;j<200;j++)
+        {
+            filtwave[0]+=filtwave[j];
+
+        }
+
+        filtwave[0]=filtwave[0]/100;
+
+
+
+        transmission=blank/filtwave[0];
+        absorbance=log10(transmission);
+//qDebug()<<filtwave[0]<<transmission<<absorbance;
+        ui->label_36->setNum(filtwave[0]);
         ui->label_37->setText(QString::number(absorbance, 'f', 3));
         addPoint(i,absorbance);
         plot();
