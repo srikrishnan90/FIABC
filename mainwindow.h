@@ -12,6 +12,7 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <math.h>
+#include <sr595.h>
 
 
 namespace Ui {
