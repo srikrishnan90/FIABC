@@ -675,7 +675,7 @@ void MainWindow::on_pushButton_45_clicked()
             b570nm[i]=readadc(2);
             b625nm[i]=readadc(1);
             b660nm[i]=readadc(0);
-
+            QThread::msleep(1);
 
             filt360nm[i]=f360.filter(b360nm[i]);
             filt405nm[i]=f405.filter(b405nm[i]);
@@ -688,6 +688,7 @@ void MainWindow::on_pushButton_45_clicked()
             //qDebug()<<b525nm[i]<<filt525nm[i];
         }
     }
+
     digitalWrite (LED_BASE + 0,LOW) ;
     digitalWrite (LED_BASE + 1,LOW) ;
     digitalWrite (LED_BASE + 2,LOW) ;
@@ -760,9 +761,9 @@ void MainWindow::on_pushButton_46_clicked()
     f660.setup (samplingrate, cutoff_frequency);
     //qDebug()<<samplingrate<<cutoff_frequency;
     int b360nm[200],b405nm[200],b505nm[200],b525nm[200],b570nm[200],b625nm[200],b660nm[200];
+
     for(int t=0;t<2;t++)
     {
-
         for(int i=0;i<200;i++)
         {
             b360nm[i]=readadc(6);
@@ -772,7 +773,7 @@ void MainWindow::on_pushButton_46_clicked()
             b570nm[i]=readadc(2);
             b625nm[i]=readadc(1);
             b660nm[i]=readadc(0);
-
+            QThread::msleep(1);
 
             filt360nm[i]=f360.filter(b360nm[i]);
             filt405nm[i]=f405.filter(b405nm[i]);
@@ -907,24 +908,33 @@ void MainWindow::on_pushButton_48_clicked()
     //qDebug()<<wavelength;
     int blank[200];
     digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
-    for(int t=0;t<2;t++)
+    QThread::msleep(200);
+    for(int i=0;i<3;i++)
     {
         for(int i=0;i<200;i++)
         {
             blank[i]=readadc(wavelength);
+            QThread::msleep(1);
             filtwave[i]=fwave.filter(blank[i]);
 
         }
+
+
+        //QThread::msleep(200);
+
+        QThread::msleep(10);
+        for(int i=100;i<200;i++)
+        {
+            filtwave[0]+=filtwave[i];
+
+        }
+
     }
     digitalWrite (LED_BASE + 6-wavelength,LOW) ;
-    for(int i=100;i<200;i++)
-    {
-        filtwave[0]+=filtwave[i];
-
-    }
-
     filtwave[0]=filtwave[0]/100;
+
     ui->label_33->setNum(filtwave[0]);
+
 
 }
 
@@ -960,40 +970,45 @@ void MainWindow::on_pushButton_49_clicked()
     double transmission=0,absorbance=0;
     int read1[200];
     double samp=ui->lineEdit_10->text().toInt();
-    digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
-    for(int i=0;i<=samp;i++)
-    {
-        for(int t=0;t<2;t++)
-        {
-            for(int j=0;j<200;j++)
-            {
-                read1[j]=readadc(wavelength);
-                filtwave[j]=fwave.filter(read1[j]);
-                qDebug()<<read1[j]<<filtwave[j];
 
-            }
+    QThread::msleep(200);
+    for(int i=0;i<=samp+1;i++)
+    {
+        digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+        QThread::msleep(100);
+        for(int j=0;j<200;j++)
+        {
+            read1[j]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[j]=fwave.filter(read1[j]);
+            //qDebug()<<read1[j]<<filtwave[j];
+
         }
+        digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+        QThread::msleep(10);
+
         for(int j=100;j<200;j++)
         {
             filtwave[0]+=filtwave[j];
 
         }
-
         filtwave[0]=filtwave[0]/100;
-
-
-
-        transmission=blank/filtwave[0];
-        absorbance=log10(transmission);
-        //qDebug()<<filtwave[0]<<transmission<<absorbance;
-        ui->label_36->setNum(filtwave[0]);
-        ui->label_37->setText(QString::number(absorbance, 'f', 3));
-        addPoint(i,absorbance);
-        plot();
+        if(i>0)
+        {
+            transmission=blank/filtwave[0];
+            absorbance=log10(transmission);
+            //qDebug()<<filtwave[0]<<transmission<<absorbance;
+            ui->label_36->setNum(filtwave[0]);
+            ui->label_37->setText(QString::number(absorbance, 'f', 3));
+            addPoint(i-1,absorbance);
+            plot();
+        }
         QApplication::processEvents();
         QThread::sleep(interval);
     }
-    digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+
+
+
 }
 
 void MainWindow::addPoint(double x, double y)
