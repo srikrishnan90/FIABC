@@ -1453,7 +1453,7 @@ void MainWindow::on_pushButton_100_clicked()
     int wavelength=0;
     wavelength=ui->comboBox_5->currentIndex();
     //qDebug()<<wavelength;
-    double blank=ui->label_173->text().toInt();
+    double blank=ui->label_182->text().toInt();
     double transmission=0,absorbance=0;
     int read1[200];
     double samp=lag+red;

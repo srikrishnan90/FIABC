@@ -30,7 +30,7 @@
      <string notr="true">background:rgb(17, 46, 88)</string>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QCustomPlot" name="customPlot" native="true">
@@ -3018,7 +3018,6 @@ color:rgb(255, 255, 255);</string>
      <zorder>label_176</zorder>
      <zorder>customPlot_8</zorder>
      <zorder>label_177</zorder>
-     <zorder>pushButton_100</zorder>
      <zorder>pushButton_101</zorder>
      <zorder>label_178</zorder>
      <zorder>label_179</zorder>
@@ -3032,6 +3031,7 @@ color:rgb(255, 255, 255);</string>
      <zorder>label_184</zorder>
      <zorder>label_185</zorder>
      <zorder>label_196</zorder>
+     <zorder>pushButton_100</zorder>
     </widget>
     <widget class="QWidget" name="page_19">
      <widget class="QPushButton" name="pushButton_104">
