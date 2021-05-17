@@ -102,6 +102,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->customPlot_2->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
     ui->customPlot_2->graph(0)->setLineStyle(QCPGraph::lsLine);
 
+    ui->customPlot_7->addGraph();
+    ui->customPlot_7->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
+    ui->customPlot_7->graph(0)->setLineStyle(QCPGraph::lsLine);
+
+    ui->customPlot_8->addGraph();
+    ui->customPlot_8->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
+    ui->customPlot_8->graph(0)->setLineStyle(QCPGraph::lsLine);
+
+    ui->customPlot_9->addGraph();
+    ui->customPlot_9->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
+    ui->customPlot_9->graph(0)->setLineStyle(QCPGraph::lsLine);
+
     ;
 
 }
@@ -589,6 +601,36 @@ void MainWindow::on_pushButton_17_clicked()
         ui->lineEdit_19->setText(val);
         ui->stackedWidget->setCurrentIndex(4);
     }
+    else if(opt==10)
+    {
+        ui->lineEdit_31->setText(val);
+        ui->stackedWidget->setCurrentIndex(6);
+    }
+    else if(opt==11)
+    {
+        ui->lineEdit_32->setText(val);
+        ui->stackedWidget->setCurrentIndex(7);
+    }
+    else if(opt==12)
+    {
+        ui->lineEdit_33->setText(val);
+        ui->stackedWidget->setCurrentIndex(7);
+    }
+    else if(opt==13)
+    {
+        ui->lineEdit_35->setText(val);
+        ui->stackedWidget->setCurrentIndex(8);
+    }
+    else if(opt==14)
+    {
+        ui->lineEdit_34->setText(val);
+        ui->stackedWidget->setCurrentIndex(8);
+    }
+    else if(opt==15)
+    {
+        ui->lineEdit_36->setText(val);
+        ui->stackedWidget->setCurrentIndex(8);
+    }
     else
     {
         QSqlQuery query;
@@ -1050,5 +1092,593 @@ void MainWindow::on_pushButton_57_clicked()
     ui->stackedWidget->setCurrentIndex(2);
     ui->label_17->setText("Interval(S)");
     opt=9;
-    ui->lineEdit_19->setText(ui->lineEdit_10->text());
+    ui->lineEdit_9->setText(ui->lineEdit_19->text());
 }
+
+void MainWindow::on_pushButton_50_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(5);
+}
+
+void MainWindow::on_pushButton_62_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(6);
+}
+
+void MainWindow::on_pushButton_63_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(7);
+}
+
+void MainWindow::on_pushButton_64_clicked()
+{
+     ui->stackedWidget->setCurrentIndex(8);
+}
+
+void MainWindow::on_pushButton_97_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Incubation");
+    opt=10;
+    ui->lineEdit_9->setText(ui->lineEdit_31->text());
+}
+
+void MainWindow::on_pushButton_101_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Lag");
+    opt=11;
+    ui->lineEdit_9->setText(ui->lineEdit_32->text());
+}
+
+void MainWindow::on_pushButton_103_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Read");
+    opt=12;
+    ui->lineEdit_9->setText(ui->lineEdit_33->text());
+}
+
+void MainWindow::on_pushButton_105_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Read");
+    opt=13;
+    ui->lineEdit_9->setText(ui->lineEdit_35->text());
+
+}
+
+void MainWindow::on_pushButton_106_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Read");
+    opt=14;
+    ui->lineEdit_9->setText(ui->lineEdit_34->text());
+}
+
+void MainWindow::on_pushButton_108_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+    ui->label_17->setText("Read");
+    opt=15;
+    ui->lineEdit_9->setText(ui->lineEdit_36->text());
+}
+
+void MainWindow::on_pushButton_99_clicked()
+{
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+    QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+    int wavelength=0;
+    wavelength=ui->comboBox_4->currentIndex();
+    //qDebug()<<wavelength;
+    int blank[200];
+    digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+    QThread::msleep(200);
+    for(int i=0;i<3;i++)
+    {
+        for(int i=0;i<200;i++)
+        {
+            blank[i]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[i]=fwave.filter(blank[i]);
+
+        }
+
+
+        //QThread::msleep(200);
+
+        QThread::msleep(10);
+        for(int i=100;i<200;i++)
+        {
+            filtwave[0]+=filtwave[i];
+
+        }
+
+    }
+    digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+    filtwave[0]=filtwave[0]/100;
+
+    ui->label_173->setNum(filtwave[0]);
+}
+
+void MainWindow::on_pushButton_102_clicked()
+{
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+    QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+    int wavelength=0;
+    wavelength=ui->comboBox_5->currentIndex();
+    //qDebug()<<wavelength;
+    int blank[200];
+    digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+    QThread::msleep(200);
+    for(int i=0;i<3;i++)
+    {
+        for(int i=0;i<200;i++)
+        {
+            blank[i]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[i]=fwave.filter(blank[i]);
+
+        }
+
+
+        //QThread::msleep(200);
+
+        QThread::msleep(10);
+        for(int i=100;i<200;i++)
+        {
+            filtwave[0]+=filtwave[i];
+
+        }
+
+    }
+    digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+    filtwave[0]=filtwave[0]/100;
+
+    ui->label_182->setNum(filtwave[0]);
+}
+
+void MainWindow::on_pushButton_107_clicked()
+{
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+    QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+    int wavelength=0;
+    wavelength=ui->comboBox_6->currentIndex();
+    //qDebug()<<wavelength;
+    int blank[200];
+    digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+    QThread::msleep(200);
+    for(int i=0;i<3;i++)
+    {
+        for(int i=0;i<200;i++)
+        {
+            blank[i]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[i]=fwave.filter(blank[i]);
+
+        }
+
+
+        //QThread::msleep(200);
+
+        QThread::msleep(10);
+        for(int i=100;i<200;i++)
+        {
+            filtwave[0]+=filtwave[i];
+
+        }
+
+    }
+    digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+    filtwave[0]=filtwave[0]/100;
+
+    ui->label_189->setNum(filtwave[0]);
+}
+
+void MainWindow::on_pushButton_98_clicked()
+{
+    ui->label_174->setText("");
+    ui->label_175->setText("");
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+    QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+
+    //nt read[200];
+    //unsigned long interval=ui->lineEdit_31->text().toULong();
+    clearData();
+    plot_end();
+    int wavelength=0;
+    wavelength=ui->comboBox_4->currentIndex();
+    //qDebug()<<wavelength;
+    double blank=ui->label_173->text().toInt();
+    double transmission=0,absorbance=0;
+    int read1[200];
+    double samp=ui->lineEdit_31->text().toInt();
+
+    QThread::msleep(200);
+    for(int i=0;i<=samp+1;i++)
+    {
+        digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+        QThread::msleep(100);
+        for(int j=0;j<200;j++)
+        {
+            read1[j]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[j]=fwave.filter(read1[j]);
+            //qDebug()<<read1[j]<<filtwave[j];
+
+        }
+        digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+        QThread::msleep(10);
+
+        for(int j=100;j<200;j++)
+        {
+            filtwave[0]+=filtwave[j];
+
+        }
+        filtwave[0]=filtwave[0]/100;
+        if(i>0)
+        {
+            transmission=blank/filtwave[0];
+            absorbance=log10(transmission);
+            //qDebug()<<filtwave[0]<<transmission<<absorbance;
+            //ui->label_36->setNum(filtwave[0]);
+            //ui->label_37->setText(QString::number(absorbance, 'f', 3));
+            addPoint(i-1,absorbance);
+            plot_end();
+        }
+        QApplication::processEvents();
+        QThread::msleep(615);
+    }
+    ui->label_174->setNum(filtwave[0]);
+    ui->label_175->setText(QString::number(absorbance, 'f', 3));
+
+}
+
+void MainWindow::plot_end()
+{
+    int samp=ui->lineEdit_31->text().toInt();
+    //ui->customPlot_2->addGraph();
+    //qDebug()<<qv_x<<qv_y
+    ui->customPlot_7->graph(0)->setData(qv_x,qv_y);
+    //ui->customPlot_2->graph(0)->setVisible(false);
+    //ui->customPlot_2->addGraph();
+    // give the axes some labels:
+    ui->customPlot_7->xAxis->setLabel("POINTS");
+    ui->customPlot_7->yAxis->setLabel("OD");
+    // set axes ranges, so we see all data:
+    ui->customPlot_7->xAxis->setRange(0, samp);
+    ui->customPlot_7->yAxis->setRange(-0.5,bc_y_val+1);
+    ui->customPlot_7->replot();
+    ui->customPlot_7->update();
+
+
+}
+
+void MainWindow::on_pushButton_100_clicked()
+{
+    ui->label_180->setText("");
+    ui->label_177->setText("");
+    ui->label_184->setText("");
+    ui->label_185->setText("");
+    ui->label_196->setText("");
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+    QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+
+    //nt read[200];
+    unsigned long lag=ui->lineEdit_32->text().toULong();
+    //int lagg=ui->lineEdit_32->text().toInt();
+     unsigned long red=ui->lineEdit_33->text().toULong();
+    clearData();
+    plot_two();
+    int wavelength=0;
+    wavelength=ui->comboBox_5->currentIndex();
+    //qDebug()<<wavelength;
+    double blank=ui->label_173->text().toInt();
+    double transmission=0,absorbance=0;
+    int read1[200];
+    double samp=lag+red;
+
+    QThread::msleep(200);
+    for(int i=0;i<=samp+1;i++)
+    {
+        digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+        QThread::msleep(100);
+        for(int j=0;j<200;j++)
+        {
+            read1[j]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[j]=fwave.filter(read1[j]);
+            //qDebug()<<read1[j]<<filtwave[j];
+
+        }
+        digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+        QThread::msleep(10);
+
+        for(int j=100;j<200;j++)
+        {
+            filtwave[0]+=filtwave[j];
+
+        }
+        filtwave[0]=filtwave[0]/100;
+        if(i>0)
+        {
+            transmission=blank/filtwave[0];
+            absorbance=log10(transmission);
+            //qDebug()<<filtwave[0]<<transmission<<absorbance;
+            //ui->label_36->setNum(filtwave[0]);
+            //ui->label_37->setText(QString::number(absorbance, 'f', 3));
+            addPoint(i-1,absorbance);
+            plot_two();
+        }
+        QApplication::processEvents();
+        QThread::msleep(615);
+        if(i==lag+1)
+        {
+            ui->label_180->setNum(filtwave[0]);
+            ui->label_177->setText(QString::number(absorbance, 'f', 3));
+        }
+        //QTime ct = QTime::currentTime();
+        //qDebug()<<i<<ct;
+    }
+    ui->label_184->setNum(filtwave[0]);
+    ui->label_185->setText(QString::number(absorbance, 'f', 3));
+    double od1=ui->label_177->text().toInt();
+    double od2=ui->label_185->text().toInt();
+    double dod=od1-od2;
+    ui->label_196->setText(QString::number(dod, 'f', 3));
+
+}
+
+void MainWindow::plot_two()
+{
+    int lag=ui->lineEdit_32->text().toInt();
+    int red=ui->lineEdit_33->text().toInt();
+    int samp=lag+red;
+    //ui->customPlot_2->addGraph();
+    //qDebug()<<qv_x<<qv_y
+    ui->customPlot_8->graph(0)->setData(qv_x,qv_y);
+    //ui->customPlot_2->graph(0)->setVisible(false);
+    //ui->customPlot_2->addGraph();
+    // give the axes some labels:
+    ui->customPlot_8->xAxis->setLabel("POINTS");
+    ui->customPlot_8->yAxis->setLabel("OD");
+    // set axes ranges, so we see all data:
+    ui->customPlot_8->xAxis->setRange(0, samp);
+    ui->customPlot_8->yAxis->setRange(-0.5,bc_y_val+1);
+    ui->customPlot_8->replot();
+    ui->customPlot_8->update();
+
+}
+
+void MainWindow::on_pushButton_104_clicked()
+{
+    ui->label_195->setText("");
+    ui->label_193->setText("");
+    ui->label_194->setText("");
+    ui->label_186->setText("");
+    ui->label_199->setText("");
+    ui->label_198->setText("");
+    ui->label_200->setText("");
+    ui->label_201->setText("");
+    ui->label_202->setText("");
+    ui->label_203->setText("");
+    ui->label_204->setText("");
+    double samplingrate=0,cutoff_frequency=0;
+    QSqlQuery query;
+    query.prepare("select samprate, cutoff from FIA where sno=1");
+    query.exec();
+    while(query.next())
+    {
+
+        samplingrate=query.value(0).toDouble();
+        cutoff_frequency=query.value(1).toDouble();
+
+    }
+
+    QThread::sleep(1);
+    const int order = 2; // 4th order (=2 biquads)
+    Iir::Butterworth::LowPass<order> fwave;
+    //const float samplingrate = 1500; // Hz
+    //const float cutoff_frequency = 4; // Hz
+    fwave.setup (samplingrate, cutoff_frequency);
+
+    //nt read[200];
+    unsigned long lag=ui->lineEdit_35->text().toULong();
+    //int lagg=ui->lineEdit_32->text().toInt();
+     unsigned long red=ui->lineEdit_34->text().toULong();
+     unsigned long del=ui->lineEdit_36->text().toULong();
+    clearData();
+    plot_kinetic();
+    int wavelength=0;
+    wavelength=ui->comboBox_6->currentIndex();
+    //qDebug()<<wavelength;
+    double blank=ui->label_189->text().toInt();
+    double transmission=0,absorbance=0;
+    int read1[200];
+    double samp=lag+(red*del);
+
+    QThread::msleep(200);
+    for(int i=0;i<=samp+1;i++)
+    {
+        digitalWrite (LED_BASE + 6-wavelength,HIGH) ;
+        QThread::msleep(100);
+        for(int j=0;j<200;j++)
+        {
+            read1[j]=readadc(wavelength);
+            QThread::msleep(1);
+            filtwave[j]=fwave.filter(read1[j]);
+            //qDebug()<<read1[j]<<filtwave[j];
+
+        }
+        digitalWrite (LED_BASE + 6-wavelength,LOW) ;
+        QThread::msleep(10);
+
+        for(int j=100;j<200;j++)
+        {
+            filtwave[0]+=filtwave[j];
+
+        }
+        filtwave[0]=filtwave[0]/100;
+        if(i>0)
+        {
+            transmission=blank/filtwave[0];
+            absorbance=log10(transmission);
+            //qDebug()<<filtwave[0]<<transmission<<absorbance;
+            //ui->label_36->setNum(filtwave[0]);
+            //ui->label_37->setText(QString::number(absorbance, 'f', 3));
+            addPoint(i-1,absorbance);
+            plot_kinetic();
+        }
+        QApplication::processEvents();
+        QThread::msleep(615);
+        if(i==lag+1)
+        {
+            ui->label_195->setNum(filtwave[0]);
+            ui->label_193->setText(QString::number(absorbance, 'f', 3));
+        }
+        if(i==lag+(del*1))
+        {
+            ui->label_194->setNum(filtwave[0]);
+            ui->label_186->setText(QString::number(absorbance, 'f', 3));
+        }
+        if(i==lag+(del*2))
+        {
+            ui->label_199->setNum(filtwave[0]);
+            ui->label_198->setText(QString::number(absorbance, 'f', 3));
+        }
+        if(i==lag+(del*3))
+        {
+            ui->label_200->setNum(filtwave[0]);
+            ui->label_201->setText(QString::number(absorbance, 'f', 3));
+        }
+        //QTime ct = QTime::currentTime();
+        //qDebug()<<i<<ct;
+    }
+   if(red==2)
+   {
+    double od1=ui->label_193->text().toInt();
+    double od2=ui->label_186->text().toInt();
+    double od3=ui->label_198->text().toInt();
+    double dod1=od1-od2;
+    double dod2=od2-od3;
+    ui->label_202->setText(QString::number(dod1, 'f', 3));
+    ui->label_203->setText(QString::number(dod2, 'f', 3));
+   }
+   if(red==3)
+   {
+    double od1=ui->label_193->text().toInt();
+    double od2=ui->label_186->text().toInt();
+    double od3=ui->label_198->text().toInt();
+    double od4=ui->label_201->text().toInt();
+    double dod1=od1-od2;
+    double dod2=od2-od3;
+    double dod3=od3-od4;
+    ui->label_202->setText(QString::number(dod1, 'f', 3));
+    ui->label_203->setText(QString::number(dod2, 'f', 3));
+    ui->label_204->setText(QString::number(dod3, 'f', 3));
+   }
+}
+
+void MainWindow::plot_kinetic()
+{
+    int lag=ui->lineEdit_35->text().toInt();
+    int red=ui->lineEdit_34->text().toInt();
+     int del=ui->lineEdit_36->text().toInt();
+    int samp=lag+(red*del);
+    //ui->customPlot_2->addGraph();
+    //qDebug()<<qv_x<<qv_y
+    ui->customPlot_9->graph(0)->setData(qv_x,qv_y);
+    //ui->customPlot_2->graph(0)->setVisible(false);
+    //ui->customPlot_2->addGraph();
+    // give the axes some labels:
+    ui->customPlot_9->xAxis->setLabel("POINTS");
+    ui->customPlot_9->yAxis->setLabel("OD");
+    // set axes ranges, so we see all data:
+    ui->customPlot_9->xAxis->setRange(0, samp);
+    ui->customPlot_9->yAxis->setRange(-0.5,bc_y_val+1);
+    ui->customPlot_9->replot();
+    ui->customPlot_9->update();
+
+
+}
+

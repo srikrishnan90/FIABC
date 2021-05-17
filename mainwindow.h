@@ -13,6 +13,7 @@
 #include <QSqlDatabase>
 #include <math.h>
 #include <sr595.h>
+#include <QDateTime>
 
 
 namespace Ui {
@@ -30,6 +31,9 @@ public:
     void addPoint(double x, double y);
     void clearData();
     void plot();
+    void plot_end();
+    void plot_two();
+    void plot_kinetic();
 
 private slots:
     void on_pushButton_clicked();
@@ -102,6 +106,38 @@ private slots:
     void on_pushButton_49_clicked();
 
     void on_pushButton_57_clicked();
+
+    void on_pushButton_50_clicked();
+
+    void on_pushButton_62_clicked();
+
+    void on_pushButton_63_clicked();
+
+    void on_pushButton_64_clicked();
+
+    void on_pushButton_97_clicked();
+
+    void on_pushButton_101_clicked();
+
+    void on_pushButton_103_clicked();
+
+    void on_pushButton_105_clicked();
+
+    void on_pushButton_106_clicked();
+
+    void on_pushButton_108_clicked();
+
+    void on_pushButton_99_clicked();
+
+    void on_pushButton_102_clicked();
+
+    void on_pushButton_107_clicked();
+
+    void on_pushButton_98_clicked();
+
+    void on_pushButton_100_clicked();
+
+    void on_pushButton_104_clicked();
 
 private:
     Ui::MainWindow *ui;
