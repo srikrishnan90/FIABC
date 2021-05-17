@@ -1502,11 +1502,10 @@ void MainWindow::on_pushButton_100_clicked()
     }
     ui->label_184->setNum(filtwave[0]);
     ui->label_185->setText(QString::number(absorbance, 'f', 3));
-    double od1=ui->label_177->text().toInt();
-    double od2=ui->label_185->text().toInt();
-    double dod=od1-od2;
+    double od1=ui->label_177->text().toDouble();
+    double od2=ui->label_185->text().toDouble();
+    double dod=od2-od1;
     ui->label_196->setText(QString::number(dod, 'f', 3));
-
 }
 
 void MainWindow::plot_two()
@@ -1636,23 +1635,23 @@ void MainWindow::on_pushButton_104_clicked()
     }
    if(red==2)
    {
-    double od1=ui->label_193->text().toInt();
-    double od2=ui->label_186->text().toInt();
-    double od3=ui->label_198->text().toInt();
-    double dod1=od1-od2;
-    double dod2=od2-od3;
+    double od1=ui->label_193->text().toDouble();
+    double od2=ui->label_186->text().toDouble();
+    double od3=ui->label_198->text().toDouble();
+    double dod1=od2-od1;
+    double dod2=od3-od2;
     ui->label_202->setText(QString::number(dod1, 'f', 3));
     ui->label_203->setText(QString::number(dod2, 'f', 3));
    }
    if(red==3)
    {
-    double od1=ui->label_193->text().toInt();
-    double od2=ui->label_186->text().toInt();
-    double od3=ui->label_198->text().toInt();
-    double od4=ui->label_201->text().toInt();
-    double dod1=od1-od2;
-    double dod2=od2-od3;
-    double dod3=od3-od4;
+    double od1=ui->label_193->text().toDouble();
+    double od2=ui->label_186->text().toDouble();
+    double od3=ui->label_198->text().toDouble();
+    double od4=ui->label_201->text().toDouble();
+    double dod1=od2-od1;
+    double dod2=od3-od2;
+    double dod3=od4-od3;
     ui->label_202->setText(QString::number(dod1, 'f', 3));
     ui->label_203->setText(QString::number(dod2, 'f', 3));
     ui->label_204->setText(QString::number(dod3, 'f', 3));
